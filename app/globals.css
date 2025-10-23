@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Bebas+Neue&family=Oswald:wght@700&display=swap');
+
+:root {
+  --foreground-rgb: 245, 237, 220;
+  --background-start-rgb: 20, 16, 12;
+  --background-end-rgb: 35, 28, 20;
+}
+
+@layer base {
+  :root {
+    --background: 28 35% 8%;
+    --foreground: 40 40% 92%;
+    --card: 28 25% 12%;
+    --card-foreground: 40 35% 95%;
+    --popover: 28 25% 12%;
+    --popover-foreground: 40 35% 95%;
+    --primary: 358 75% 45%;
+    --primary-foreground: 40 40% 98%;
+    --secondary: 38 45% 35%;
+    --secondary-foreground: 40 35% 95%;
+    --muted: 28 20% 18%;
+    --muted-foreground: 38 25% 60%;
+    --accent: 45 80% 55%;
+    --accent-foreground: 28 30% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 38 30% 25%;
+    --input: 28 25% 15%;
+    --ring: 358 75% 45%;
+    --radius: 0rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 2px 12px rgba(212, 175, 55, 0.4), 0 0 40px rgba(212, 175, 55, 0.1);
+  }
+
+  .text-shadow-deep {
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .border-ornate {
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(135deg, #8B4513 0%, #D4AF37 25%, #D4AF37 75%, #8B4513 100%) 1;
+  }
+
+  .bg-canvas {
+    background: linear-gradient(135deg, rgba(40, 32, 24, 0.8) 0%, rgba(28, 22, 16, 0.9) 100%);
+  }
+}
