@@ -56,8 +56,8 @@ export function TaskCard({ task }: TaskCardProps) {
 
   const formatDateRange = () => {
     if (!task.startDate || !task.deadline) return null;
-    const start = new Date(task.startDate).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
-    const end = new Date(task.deadline).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+    const start = new Date(task.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const end = new Date(task.deadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     return `${start} - ${end}`;
   };
 
