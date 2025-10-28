@@ -17,6 +17,22 @@ DEFAULT_MODEL=deepseek/deepseek-chat-v3.1
 
 3. 如果部署到 Vercel，请在 Vercel 项目设置中添加同样的环境变量
 
+### Vercel 自动部署配置
+
+本项目已配置 Vercel 自动部署。每当你推送代码到 GitHub 仓库的 main 分支时，Vercel 将自动构建并部署最新版本。
+
+#### 设置步骤：
+
+1. 在 Vercel 中导入你的 GitHub 仓库
+2. 在 Vercel 项目设置中配置环境变量：
+   - `OPENROUTER_API_KEY`
+   - `OPENROUTER_API_URL`
+   - `DEFAULT_MODEL`
+3. 如果使用 GitHub Actions 部署，还需要在 GitHub 仓库的 Secrets 中添加：
+   - `VERCEL_TOKEN` - 从 Vercel 个人设置中获取
+   - `VERCEL_ORG_ID` - 从 Vercel 项目设置中获取
+   - `VERCEL_PROJECT_ID` - 从 Vercel 项目设置中获取
+
 ### 支持的 API 提供商
 
 目前项目默认使用 OpenRouter API，支持 deepseek-chat-v3.1 模型。
