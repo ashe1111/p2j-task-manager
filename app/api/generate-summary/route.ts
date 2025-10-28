@@ -34,7 +34,11 @@ This week's data:
 
 Please generate a summary report in ${tone} tone (30-50 words), evaluate this week's performance and give suggestions for next week.`;
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    // 使用环境变量获取 API URL 和模型
+    const apiUrl = process.env.OPENROUTER_API_URL || 'https://openrouter.ai/api/v1/chat/completions';
+    const model = process.env.DEFAULT_MODEL || 'deepseek/deepseek-chat-v3.1';
+
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +46,7 @@ Please generate a summary report in ${tone} tone (30-50 words), evaluate this we
         'X-Title': 'P2J Weekly Summary',
       },
       body: JSON.stringify({
-        model: 'deepseek/deepseek-chat-v3.1',
+        model: model,
         messages: [
           {
             role: 'user',
