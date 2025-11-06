@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { LogOut, User } from 'lucide-react';
 import { toast } from 'sonner';
+import { createSupabaseBrowser } from '@/utils/supabaseBrowser';
 
 import {
   DropdownMenu,
@@ -23,24 +24,19 @@ interface UserMenuProps {
 export function UserMenu({ email }: UserMenuProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const supabase = createSupabaseBrowser();
 
   const handleSignOut = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/auth/signout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('登出失败');
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        throw new Error(error.message);
       }
 
       toast.success('已成功登出');
       router.push('/auth/signin');
-      router.refresh();
     } catch (error) {
       toast.error('登出时出现错误');
       console.error('登出错误:', error);

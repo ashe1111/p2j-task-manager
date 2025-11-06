@@ -2,38 +2,34 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import type { Database } from '@/types/supabase'
+import { createSupabaseBrowser } from '@/utils/supabaseBrowser'
+import { AuthError } from '@supabase/supabase-js'
 
-export default function Callback() {
+export default function CallbackPage() {
   const router = useRouter()
-  const [status, setStatus] = useState('正在验证登录中...')
+  const supabase = createSupabaseBrowser()
+  const [text, setText] = useState('正在为你登录…')
   
-  // 使用 createClientComponentClient 替代直接创建客户端
-  const supabase = createClientComponentClient<Database>()
-
   useEffect(() => {
-    const exchange = async () => {
-      try {
-        console.log('📩 正在执行 exchangeCodeForSession...')
-        const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href)
+    console.log('📩 正在执行 exchangeCodeForSession...')
+    
+    supabase.auth.exchangeCodeForSession(window.location.href)
+      .then(({ data, error }: { data: any, error: AuthError | null }) => {
         if (error) {
           console.error('❌ exchange 错误:', error.message)
-          setStatus('登录失败: ' + error.message)
+          setText(`登录失败：${error.message}`)
         } else {
           console.log('✅ 登录成功:', data)
-          setStatus('登录成功！正在跳转...')
-          setTimeout(() => router.push('/dashboard'), 1000)
+          setText('登录成功！正在跳转...')
+          setTimeout(() => router.replace('/dashboard'), 1000)
         }
-      } catch (err) {
+      })
+      .catch((err: Error) => {
         console.error('⚠️ 异常:', err)
-        setStatus('异常: ' + String(err))
-      }
-    }
-
-    exchange()
-  }, [router, supabase])
-
+        setText(`异常: ${String(err)}`)
+      })
+  }, [])
+  
   return (
     <div
       style={{
@@ -44,7 +40,7 @@ export default function Callback() {
         flexDirection: 'column',
       }}
     >
-      <h3>{status}</h3>
+      <h3>{text}</h3>
     </div>
   )
 }
