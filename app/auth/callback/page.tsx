@@ -2,16 +2,15 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import type { Database } from '@/types/supabase'
 
 export default function Callback() {
   const router = useRouter()
   const [status, setStatus] = useState('正在验证登录中...')
+  
+  // 使用 createClientComponentClient 替代直接创建客户端
+  const supabase = createClientComponentClient<Database>()
 
   useEffect(() => {
     const exchange = async () => {
@@ -33,7 +32,7 @@ export default function Callback() {
     }
 
     exchange()
-  }, [router])
+  }, [router, supabase])
 
   return (
     <div
