@@ -1,90 +1,69 @@
-# P2J - 从拖延到高效
+# P2J - 从拖延到高效的任务管理应用
 
-## API 配置说明
+这是一个基于 Next.js 和 Supabase 构建的任务管理应用，帮助用户将拖延转化为生产力。
 
-本项目使用 AI API 来生成任务计划和周报摘要。你需要配置以下环境变量：
+## 功能特点
 
-### 设置环境变量
+- AI 驱动的任务规划
+- 用户认证（注册、登录、登出）
+- 任务管理和跟踪
+- 游戏化激励系统
+- 智能周报
 
-1. 在项目根目录创建 `.env.local` 文件（本地开发用）
-2. 添加以下内容：
+## 技术栈
 
+- Next.js 13 (App Router)
+- TypeScript
+- Supabase (认证和数据库)
+- Tailwind CSS
+- Shadcn UI 组件
+- Zustand (状态管理)
+
+## 环境设置
+
+1. 克隆仓库
+
+```bash
+git clone <repository-url>
+cd project
 ```
-OPENROUTER_API_KEY=你的OpenRouter_API密钥
-OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
-DEFAULT_MODEL=deepseek/deepseek-chat-v3.1
-```
 
-3. 如果部署到 Vercel，请在 Vercel 项目设置中添加同样的环境变量
+2. 安装依赖
 
-### Vercel 自动部署配置
-
-本项目已配置 Vercel 自动部署。每当你推送代码到 GitHub 仓库的 main 分支时，Vercel 将自动构建并部署最新版本。
-
-#### 设置步骤：
-
-1. 在 Vercel 中导入你的 GitHub 仓库
-2. 在 Vercel 项目设置中配置环境变量：
-   - `OPENROUTER_API_KEY`
-   - `OPENROUTER_API_URL`
-   - `DEFAULT_MODEL`
-3. 如果使用 GitHub Actions 部署，还需要在 GitHub 仓库的 Secrets 中添加：
-   - `VERCEL_TOKEN` - 从 Vercel 个人设置中获取
-   - `VERCEL_ORG_ID` - 从 Vercel 项目设置中获取
-   - `VERCEL_PROJECT_ID` - 从 Vercel 项目设置中获取
-
-### 支持的 API 提供商
-
-目前项目默认使用 OpenRouter API，支持 deepseek-chat-v3.1 模型。
-
-如果你想使用其他 API 提供商，可以修改环境变量中的 API URL 和模型名称，或者修改 `app/api/generate-schedule/route.ts` 和 `app/api/generate-summary/route.ts` 文件中的 API 调用代码。
-
-## 开发说明
-
-1. 安装依赖：
 ```bash
 npm install
 ```
 
-2. 启动开发服务器：
+3. 配置环境变量
+
+创建 `.env.local` 文件并添加以下内容：
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+4. 启动开发服务器
+
 ```bash
 npm run dev
 ```
 
-3. 构建生产版本：
+## Supabase 配置
+
+1. 创建 Supabase 项目
+2. 启用邮箱认证
+3. 设置重定向 URL（例如：`http://localhost:3000/auth/callback`）
+4. 创建必要的数据表（参考 `supabase/migrations` 目录）
+
+## 部署
+
+应用可以部署到 Vercel 或其他支持 Next.js 的平台。
+
 ```bash
 npm run build
 ```
 
-## 技术架构
+## 许可证
 
-- 前端框架：Next.js 13 App Router
-- UI 组件：Shadcn UI + Tailwind CSS
-- 状态管理：Zustand
-- AI 集成：服务器端 API 路由
-
-## 性能优化
-
-- API 调用已移至服务器端，避免客户端暴露 API 密钥
-- 使用 Next.js API 路由处理 AI 请求，提高安全性
-- 环境变量配置遵循 Next.js 最佳实践
-
-## 常见问题
-
-### 服务器启动问题
-
-如果遇到 `EPERM: operation not permitted` 错误，可能是端口被占用，尝试以下解决方法：
-
-1. 关闭可能占用端口的其他应用
-2. 使用不同端口启动：
-```bash
-npx next dev -p 3001
-```
-
-3. 或者找出并关闭占用端口的进程：
-```bash
-# 查找占用 3000 端口的进程
-lsof -i :3000
-# 终止进程
-kill -9 进程ID
-```
+[MIT](LICENSE)
